@@ -38,7 +38,7 @@ feature.compose <iostream>off : <define>BOOST_NO_IOSTREAM ;
 lib jlibtorrent
 
     : # sources
-	 libtorrent_jni.cpp
+	libtorrent_jni.cpp
 
     : # requirements
     <conditional>@libtorrent_linking
@@ -51,3 +51,28 @@ lib jlibtorrent
     : # usage-requirements
     <include>.
     ;
+
+lib jlibtorrent_objc
+
+    : # sources
+	libtorrent_jni.cpp
+	[ glob objc/*.m ]
+	[ glob objc/alerts/*.m ]
+	[ glob objc/swig/*.m ]
+
+    : # requirements
+    <conditional>@libtorrent_linking
+    <library>/torrent//torrent/<link>static
+    <cxxflags>-fobjc-arc
+    <include>.
+    <include>objc
+    <include>objc/alerts
+    <include>objc/swig
+
+    : # default build
+    <link>shared
+
+    : # usage-requirements
+    ;
+
+explicit jlibtorrent_objc ;
